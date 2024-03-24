@@ -15,7 +15,7 @@ public class pm2 : MonoBehaviour
     public int jumpMax;
     public int jumpCount; //Đếm số lần nhảy
     //Chế độ di chuyển
-    public bool autoMove = true;
+    public bool autoMove;
 
     void Start()
     {
@@ -24,11 +24,12 @@ public class pm2 : MonoBehaviour
         jumpSpeed = 6f;
         jumpMax = 2;
         jumpCount = 0;
+        autoMove = true;
 
-    //Khi chạy, tự tìm 1 Rigidbody2D để gắn vào,
-    //Chỉ tìm các component bên trong nó
-    //rb = GetComponent<Rigidbody2D>();
-}
+        //Khi chạy, tự tìm 1 Rigidbody2D để gắn vào,
+        //Chỉ tìm các component bên trong nó
+        //rb = GetComponent<Rigidbody2D>();
+    }
 
     // Update is called once per frame
     void Update()

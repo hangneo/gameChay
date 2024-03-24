@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+//Lấy ngẫu nhiên trong danh sách mặt đất để tạo các ô bản đồ mới
+//Mỗi lần tạo ra _numMap ô mới
+//Mỗi ô cách nhau khoảng cách ngẫu nhiên trong khoảng _spaceMin.._spaceMax
+
 public class randomMap : MonoBehaviour
 {
     //Mảng các block bản đồ. Gán các bản đồ nguyên bản vào mảng này từ cửa sổ project
@@ -12,68 +16,66 @@ public class randomMap : MonoBehaviour
     //Khoảng cách để tạo sẵn map và hủy
     public float rangeToDestroyObject = 40f; 
     //Khoảng cách ngẫu nhiên giữa hai ô map
-    public float spaceMin = 2f;
-    public float spaceMax = 5f;
+    public float _spaceMin;
+    public float _spaceMax;
     //Số ô map mới được tạo ra mỗi lần
-    public int numMap = 5;
+    public int _numMap = 5;
     //Cao độ khi sinh ô map mới
-    public float heightPos = -2f;
-    //Mảng chứa các block map được tạo ra
-    public List<GameObject> listGroundOld; 
+    public float _heightPos = -2f;
+    //Bề rộng mỗi ô map mới sinh ra
+    int _groundLen;
+    //Tọa độ trục Z của layer cha sinh map
+    private float _z;
 
-    Vector3 endPos; //Vị trí cuối cùng
-    Vector3 nextPos; //Vị trí tiếp theo sẽ tạo ô map mới
-    int groundLen; //Bề rộng mỗi ô map mới sinh ra 
+    private Vector3 _endPos; //Vị trí cuối cùng
+    private Vector3 _nextPos; //Vị trí tiếp theo sẽ tạo ô map mới
+    
 
     void Start()
     {
-        endPos = new Vector3(18.0f, heightPos, 0.0f); 
+        _spaceMin = 2f;
+        _spaceMax = 5f;
+        _numMap = 5;
+        _z = transform.position.z;
+        _endPos = new Vector3(18.0f, _heightPos, _z); 
         generateBlockMap();
     }
 
     void Update()
     {
-        //Nếu khoảng cách từ người chơi đến endPos gần hơn mức quy định thì tiếp tục sinh map mới
-        if (Vector2.Distance(player.position, endPos) < rangeToDestroyObject)
+        //Nếu khoảng cách từ người chơi đến _endPos gần hơn mức quy định thì tiếp tục sinh map mới
+        if (Vector2.Distance(player.position, _endPos) < rangeToDestroyObject)
         {
             generateBlockMap();
-        }
-
-        //Lấy đối tượng Map đầu tiên trong danh sách, so sánh vị trí nếu đã đi qua xa thì hủy 
-        GameObject getOneGround = listGroundOld.FirstOrDefault();
-        if (getOneGround != null && Vector2.Distance(player.position, getOneGround.transform.position) > rangeToDestroyObject)
-        {
-            listGroundOld.Remove(getOneGround);
-            Destroy(getOneGround);
         }
     }
 
     void generateBlockMap ()
     {
-        for (int i = 0; i < numMap; i++)
+        for (int i = 0; i < _numMap; i++)
         {
-            float spaceToNext = Random.Range(spaceMin, spaceMax); //Khoảng cách ngẫu nhiên giữa các block
-            nextPos = new Vector3(endPos.x + spaceToNext, heightPos, 0f); //Vị trí tạo ô map mới
-
+            //Khoảng cách ngẫu nhiên giữa các block
+            float _spaceToNext = Random.Range(_spaceMin, _spaceMax);
+            //Vị trí tạo ô map mới
+            _nextPos = new Vector3(_endPos.x + _spaceToNext, _heightPos, _z); 
             //Tạo số nguyên ngẫu nhiên trong khoảng từ a-b, không bao gồm b
-            int groundID = Random.Range(0, listGround.Count);
-
+            //Lấy ô ground ngẫu nhiên trong danh sách
+            int _groundID = Random.Range(0, listGround.Count);
             //Tạo ra block bản đồ ngẫu nhiên, gán vào mảng 
-            GameObject newGround = Instantiate(listGround[groundID], nextPos, Quaternion.identity, transform);
-            listGroundOld.Add(newGround); //Thêm miếng đất vừa tạo vào mảng
+            Instantiate(listGround[_groundID], _nextPos, Quaternion.identity, transform);
 
-            switch (groundID) //Tính độ rộng Map ngẫu nhiên
+            switch (_groundID) //Tính độ rộng theo ô nền đất ngẫu nhiên đã chọn
             {
-                case 0: groundLen = 2; break;
-                case 1: groundLen = 3; break;
-                case 2: groundLen = 4; break;
-                case 3: groundLen = 6; break;
-                case 4: groundLen = 8; break;
-                case 5: groundLen = 3; break;
-                case 6: groundLen = 13; break;
+                case 0: _groundLen = 2; break;
+                case 1: _groundLen = 3; break;
+                case 2: _groundLen = 4; break;
+                case 3: _groundLen = 6; break;
+                case 4: _groundLen = 8; break;
+                case 5: _groundLen = 3; break;
+                case 6: _groundLen = 13; break;
             }
 
-            endPos = new Vector3(nextPos.x + groundLen, heightPos, 0f);
+            _endPos = new Vector3(_nextPos.x + _groundLen, _heightPos, _z);
         }
     }
 }
