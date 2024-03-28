@@ -69,3 +69,4 @@ public class GameManager : MonoBehaviour
 
 
 // Hướng comment test
+// Hướng comment 2
