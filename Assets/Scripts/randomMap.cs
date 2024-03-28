@@ -29,7 +29,6 @@ public class randomMap : MonoBehaviour
 
     private Vector3 _endPos; //Vị trí cuối cùng
     private Vector3 _nextPos; //Vị trí tiếp theo sẽ tạo ô map mới
-    
 
     void Start()
     {
@@ -49,7 +48,6 @@ public class randomMap : MonoBehaviour
             generateBlockMap();
         }
     }
-
     void generateBlockMap ()
     {
         for (int i = 0; i < _numMap; i++)
@@ -74,7 +72,7 @@ public class randomMap : MonoBehaviour
                 case 5: _groundLen = 3; break;
                 case 6: _groundLen = 13; break;
             }
-
+            //Tính lại vị trí cuối mới
             _endPos = new Vector3(_nextPos.x + _groundLen, _heightPos, _z);
         }
     }

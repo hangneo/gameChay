@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class pm2 : MonoBehaviour
@@ -16,6 +17,8 @@ public class pm2 : MonoBehaviour
     public int jumpCount; //Đếm số lần nhảy
     //Chế độ di chuyển
     public bool autoMove;
+    //Hiển thị điểm
+    public TextMeshProUGUI _txtScore;
 
     void Start()
     {
@@ -68,6 +71,16 @@ public class pm2 : MonoBehaviour
         if (collision.gameObject.CompareTag("ground"))
         {
             jumpCount = 0;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("coin"))
+        {
+            GameManager.instance.AddCoin();
+            _txtScore.text = "SCORE: " + GameManager.instance._coins.ToString();
+            Destroy(collision.gameObject);
         }
     }
 }
