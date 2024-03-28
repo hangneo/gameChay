@@ -22,3 +22,5 @@ public class parallax2 : MonoBehaviour
         //_mat.SetTextureOffset("_MainTex", Vector2.left * _distance);
     }
 }
+
+// Hướng comment test
