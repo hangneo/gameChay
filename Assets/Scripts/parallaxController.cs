@@ -86,3 +86,5 @@ public class parallaxController : MonoBehaviour
         }
     }
 }
+
+// Hướng comment test
