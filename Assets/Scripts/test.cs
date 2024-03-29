@@ -21,3 +21,4 @@ public class test : MonoBehaviour
 
 
 //ghi chú 1, nhánh an
+//ghi chú 2, an
