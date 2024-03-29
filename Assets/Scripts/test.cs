@@ -16,3 +16,8 @@ public class test : MonoBehaviour
         
     }
 }
+
+
+
+
+//ghi chú 1, nhánh an
