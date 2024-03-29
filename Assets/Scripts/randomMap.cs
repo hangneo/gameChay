@@ -9,6 +9,9 @@ using UnityEngine;
 
 public class randomMap : MonoBehaviour
 {
+    public GameObject _plantPrefeb;
+    public GameObject _boarPrefab;
+
     //Mảng các block bản đồ. Gán các bản đồ nguyên bản vào mảng này từ cửa sổ project
     public List<GameObject> listGround; 
     //Gán nhân vật để lấy vị trí (kéo thả player ngoài cửa sổ  project)
@@ -23,7 +26,8 @@ public class randomMap : MonoBehaviour
     //Cao độ khi sinh ô map mới
     public float _heightPos = -2f;
     //Bề rộng mỗi ô map mới sinh ra
-    int _groundLen;
+    private int _groundLen;
+    private int _groundHeight;
     //Tọa độ trục Z của layer cha sinh map
     private float _z;
 
@@ -64,14 +68,24 @@ public class randomMap : MonoBehaviour
 
             switch (_groundID) //Tính độ rộng theo ô nền đất ngẫu nhiên đã chọn
             {
-                case 0: _groundLen = 2; break;
-                case 1: _groundLen = 3; break;
-                case 2: _groundLen = 4; break;
-                case 3: _groundLen = 6; break;
-                case 4: _groundLen = 8; break;
-                case 5: _groundLen = 3; break;
-                case 6: _groundLen = 13; break;
+                case 0: _groundLen = 2; _groundHeight = 2; break;
+                case 1: _groundLen = 3; _groundHeight = 2; break;
+                case 2: _groundLen = 4; _groundHeight = 2; break;
+                case 3: _groundLen = 6; _groundHeight = 2; break;
+                case 4: _groundLen = 8; _groundHeight = 3; break;
+                case 5: _groundLen = 3; _groundHeight = 3; break;
+                case 6: _groundLen = 13; _groundHeight = 4; break;
             }
+
+            float _xacSuat = Random.Range(0, 1f);
+            if (_xacSuat < 0.3f)
+            {
+                Instantiate(_plantPrefeb, new Vector3(_nextPos.x + 1, _nextPos.y + _groundHeight, _z), Quaternion.identity, transform); ;
+            } else if (_xacSuat > 0.7f)
+            {
+                Instantiate(_boarPrefab, new Vector3(_nextPos.x + 1, _nextPos.y + _groundHeight, _z), Quaternion.identity, transform); ;
+            }    
+
             //Tính lại vị trí cuối mới
             _endPos = new Vector3(_nextPos.x + _groundLen, _heightPos, _z);
         }

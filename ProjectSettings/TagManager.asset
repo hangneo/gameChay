@@ -6,6 +6,9 @@ TagManager:
   tags:
   - coin
   - ground
+  - bullet
+  - player
+  - fence
   layers:
   - Default
   - TransparentFX
