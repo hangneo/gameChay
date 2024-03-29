@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//test test test test test 
+
 //Lưu ý, Game Object cần có Collision2D và có Rigibody2D (lưu ý Body type phải ở mode Dynamic) 
 public class Recycle : MonoBehaviour
 {
@@ -27,3 +27,5 @@ public class Recycle : MonoBehaviour
         Destroy(collision.gameObject);
     }
 }
+
+//test test test test test An 2
